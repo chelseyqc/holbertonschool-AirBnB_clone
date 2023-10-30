@@ -10,7 +10,7 @@ class BaseModel:
 
     def __init__(self):
         """instantiation of class attributes"""
-        self.id = uuid.uuid4()
+        self.id = str(uuid.uuid4())
         current_create = datetime.now()
         self.created_at = current_create.strftime('%Y-%m-%dT%H:%M:%S.%f')
         current_update = datetime.now()
