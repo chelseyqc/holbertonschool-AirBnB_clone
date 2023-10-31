@@ -32,6 +32,7 @@ class FileStorage:
         """deserializes the JSON file to __objects if the JSON file exists"""
         from models.base_model import BaseModel
 
+        reloaded = {}
         if os.path.exists(self.__file_path):
             with open(self.__file_path, 'r', encoding="utf-8") as file:
                 reloaded = json.load(file)
