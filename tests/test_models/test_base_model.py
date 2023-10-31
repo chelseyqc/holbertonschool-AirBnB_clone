@@ -8,9 +8,10 @@ class TestBaseModel(unittest.TestCase):
 
     def test_save(self):
         """Test - save method"""
-        old_save = str(BaseModel().updated_at)
-        BaseModel().save()
-        new_save = str(BaseModel().updated_at)
+        base = BaseModel()
+        old_save = str(base.updated_at)
+        base.save()
+        new_save = str(base.updated_at)
         self.assertNotEqual(old_save, new_save)
 
     def test_id(self):
@@ -21,8 +22,9 @@ class TestBaseModel(unittest.TestCase):
 
     def test_to_dict(self):
         """Test - to_dict method"""
-        new_dict = BaseModel.__dict__.copy()
-        self.assertEqual(new_dict, BaseModel.__dict__)
+        base = BaseModel()
+        new_dict = base.to_dict()
+        self.assertEqual(base.id, new_dict["id"])
 
     def test_str(self):
         """Test - __str__ method"""
