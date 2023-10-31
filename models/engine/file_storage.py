@@ -39,4 +39,4 @@ class FileStorage:
         else:
             pass
         for key, obj in reloaded.items():
-            self.__objects[key] = BaseModel(reloaded)
+            self.__objects[key] = BaseModel(**obj)
