@@ -1,6 +1,7 @@
 #!/usr/python3
 """BaseModel unit tests"""
 import unittest
+import os
 from models.base_model import BaseModel
 
 class TestBaseModel(unittest.TestCase):
@@ -11,7 +12,7 @@ class TestBaseModel(unittest.TestCase):
         base = BaseModel()
         new_save = base.updated_at
         base.save()
-        selfassertLess(new_save, base.updated_at)
+        self.assertLess(new_save, base.updated_at)
         self.assertTrue(os.path.exists("file.json"))
 
     def test_id(self):
