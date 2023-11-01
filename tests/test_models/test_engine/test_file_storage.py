@@ -2,8 +2,10 @@
 """File Storage tests"""
 import unittest
 from datetime import datetime
-from models.engine.file_storage import FileStorage
+import json
+import os
 from models.base_model import BaseModel
+from models.engine.file_storage import FileStorage
 
 class TestFileStorage(unittest.TestCase):
     """FileStorage unit tests"""
@@ -11,6 +13,8 @@ class TestFileStorage(unittest.TestCase):
     def setUp(self):
         """Sets up the class"""
         self.storage = FileStorage()
+        self.storage.__objects = {}
+        self.storage.__file_path = "test_data.json"
 
     def tearDown(self):
         """Clean up crew"""
@@ -49,13 +53,22 @@ class TestFileStorage(unittest.TestCase):
 
     def test_filestorage_save(self):
         """Test - save method saves to file"""
-        base = BaseModel()
-        base.value = 10
-        old = base.updated_at.isoformat()
-        base.save()
-        new = base.updated_at.isoformat()
-        self.assertEqual(base.value, 10)
+        object_1 = BaseModel()
+        new_save = object_1.updated_at
+        object_1.save()
+        self.assertLess(new_save, object_1.updated_at)
 
+    def test_filestorage_reload(self):
+        """Test - reload method"""
+        data = {
+            "Object1": {"id": 1, "name": "Object1"},
+            "Object2": {"id": 2, "name": "Object2"}
+        }
+        with open(self.storage._FileStorage__file_path, 'w', encoding="utf-8") as file:
+            json.dump(data, file)
+        self.storage.reload()
+        self.assertIn("Object1", self.storage._FileStorage__objects)
+        self.assertIn("Object2", self.storage._FileStorage__objects)
 
 if __name__ == '__main__':
     unittest.main()
