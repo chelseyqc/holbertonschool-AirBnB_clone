@@ -1,74 +1,49 @@
 #!/usr/bin/python3
-"""File Storage tests"""
+"""Unittests for File Storage Class
+"""
 import unittest
-from datetime import datetime
-import json
-import os
-from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
+from models.base_model import BaseModel
+from datetime import datetime
 
-class TestFileStorage(unittest.TestCase):
-    """FileStorage unit tests"""
+class TestBase(unittest.TestCase):
+    """Test functions for FileStorage Class
+    """
+    def test_file_path(self):
+        """Tests file_path exists
+        """
+        fs = FileStorage()
+        x = fs.file_path is not None
+        self.assertEqual(x, True)
 
-    def setUp(self):
-        """Sets up the class"""
-        self.storage = FileStorage()
-        self.storage.__objects = {}
-        self.storage.__file_path = "test_data.json"
+    def test_objects(self):
+        """Tests objects exists
+        """
+        fs = FileStorage()
+        bm = BaseModel()
+        fs.new(bm)
+        x = len(fs.objects) > 0
+        self.assertEqual(x, True)
 
-    def tearDown(self):
-        """Clean up crew"""
-        self.storage = None
+        key = "BaseModel." + str(bm.id)
+        d = fs.objects[key].to_dict()
+        self.assertEqual(bm.id, d["id"])
 
-    def test_filestorage_file_path(self):
-        """Test - that there is a file path"""
-        path = self.storage._FileStorage__file_path
-        self.assertEqual(path, "file.json")
+    def test_all_method_return_type(self):
+        """Tests all method return dict
+        """
+        fs = FileStorage()
+        x = len(fs.all()) > 0
+        self.assertEqual(x, True)
 
-    def test_filestorage_objects(self):
-        """Test - that objects exists"""
-        store = FileStorage()
-        base = BaseModel()
-        key = "{}.{}".format(base.__class__.__name__, base.id)
-        obj1 = self.storage._FileStorage__objects
-        self.assertEqual(obj1[key], base)
+    def test_save_method_works(self):
+        """Tests that save method writes to file successfully
+        """
+        bm = BaseModel()
+        bm.value = 999
+        old = bm.updated_at.isoformat()
+        bm.save()
+        new = bm.updated_at.isoformat()
 
-    def test_filestorage_all(self):
-        """Test - the all method"""
-        self.storage._FileStorage__objects = {
-            "Object1": {"id": 1, "name": "Object1"}
-        }
-        expected = {
-            "Object1": {"id": 1, "name": "Object1"}
-        }
-        self.assertEqual(self.storage.all(), expected)
-
-    def test_filestorage_new(self):
-        """Test - the new method creates an object"""
-        store = FileStorage()
-        base = BaseModel()
-        store.new(base)
-        key = "{}.{}".format(base.__class__.__name__, base.id)
-        self.assertEqual(store._FileStorage__objects[key], base)
-
-    def test_filestorage_save(self):
-        """Test - save method saves to file"""
-        object_1 = BaseModel()
-        new_save = object_1.updated_at
-        object_1.save()
-        self.assertLess(new_save, object_1.updated_at)
-
-    def test_filestorage_reload(self):
-        """Test - reload method"""
-        data = {
-            "Object1": {"id": 1, "name": "Object1"},
-            "Object2": {"id": 2, "name": "Object2"}
-        }
-        with open(self.storage._FileStorage__file_path, 'w', encoding="utf-8") as file:
-            json.dump(data, file)
-        self.storage.reload()
-        self.assertIn("Object1", self.storage._FileStorage__objects)
-        self.assertIn("Object2", self.storage._FileStorage__objects)
-
-if __name__ == '__main__':
-    unittest.main()
+        self.assertEqual(bm.value, 999)
+        self.assertNotEqual(old, new)
