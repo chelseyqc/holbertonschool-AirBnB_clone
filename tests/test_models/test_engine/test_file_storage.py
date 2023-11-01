@@ -30,10 +30,14 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(obj1[key], base)
 
     def test_filestorage_all(self):
-        """Test - the all method returns an empty dictionary"""
-        store = FileStorage()
-        result = store.all()
-        self.assertEqual(result, store._FileStorage__objects)
+        """Test - the all method"""
+        self.storage._FileStorage__objects = {
+            "Object1": {"id": 1, "name": "Object1"}
+        }
+        expected = {
+            "Object1": {"id": 1, "name": "Object1"}
+        }
+        self.assertEqual(self.storage.all(), expected)
 
     def test_filestorage_new(self):
         """Test - the new method creates an object"""
@@ -42,6 +46,16 @@ class TestFileStorage(unittest.TestCase):
         store.new(base)
         key = "{}.{}".format(base.__class__.__name__, base.id)
         self.assertEqual(store._FileStorage__objects[key], base)
+
+    def test_filestorage_save(self):
+        """Test - save method saves to file"""
+        base = BaseModel()
+        base.value = 10
+        old = base.updated_at.isoformat()
+        base.save()
+        new = base.updated_at.isoformat()
+        self.assertEqual(base.value, 10)
+
 
 if __name__ == '__main__':
     unittest.main()
