@@ -63,7 +63,8 @@ class HBNBCommand(cmd.Cmd):
             this_key = "{}.{}".format(arg_list[0], arg_list[1])
             class_dict = storage.all()
             if this_key in class_dict:
-                class_dict.remove(this_key)
+                del class_dict[this_key]
+                storage.save()
             else:
                 print("** no instance found **")
 """
