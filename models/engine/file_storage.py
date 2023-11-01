@@ -25,7 +25,7 @@ class FileStorage:
         empty_dict = {}
         for key in self.__objects:
             empty_dict[key] = self.__objects[key].to_dict()
-        with open(self.__file_path, 'w', encoding="utf-8") as file:
+        with open(self.__file_path, 'w') as file:
             json.dump(empty_dict, file)
 
     def reload(self):
