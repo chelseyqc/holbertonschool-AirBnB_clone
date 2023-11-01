@@ -1,6 +1,6 @@
 #!/usr/bin/python3
+"""command interpreter entry point"""
 import cmd
-"command interpreter entry point"
 
 
 class HBNBCommand(cmd.Cmd):
@@ -9,11 +9,11 @@ class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
 
     def if_emptyline(self, arg):
-        "If command line is empty"
+        """ If command line is empty"""
         pass
 
     def do_quit(self, arg):
-        "Exits the program"
+        """Exits the program"""
         return True
 
     do_EOF = do_quit
