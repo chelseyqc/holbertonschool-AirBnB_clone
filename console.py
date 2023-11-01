@@ -4,12 +4,12 @@ import cmd
 
 
 class HBNBCommand(cmd.Cmd):
-    """ basic commands """
+    """basic commands """
 
     prompt = '(hbnb) '
 
-    def if_emptyline(self, arg):
-        """ If command line is empty"""
+    def if_emptyline(self):
+        """If command line is empty"""
         pass
 
     def do_quit(self, arg):
