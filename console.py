@@ -3,6 +3,15 @@
 import cmd
 from models import storage
 from models.base_model import BaseModel
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
+
+classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
+"Place": Place, "Review": Review, "State": State, "User": User}
 
 
 class HBNBCommand(cmd.Cmd):
@@ -24,7 +33,7 @@ class HBNBCommand(cmd.Cmd):
         """Creates a new instance of BaseModel & saves to json"""
         if len(arg) == 0:
             print("** class name missing **")
-        elif arg != "BaseModel":
+        elif arg not in classes:
             print("** class doesn't exist **")
         else:
             instance = BaseModel()
@@ -38,7 +47,7 @@ class HBNBCommand(cmd.Cmd):
         arg_list = arg.split()
         if len(arg_list) == 0:
             print("** class name missing **")
-        elif arg_list[0] != "BaseModel":
+        elif arg_list[0] not in classes:
             print("** class doesn't exist **")
         elif (len(arg_list) < 2):
             print("** instance id missing **")
@@ -55,7 +64,7 @@ class HBNBCommand(cmd.Cmd):
         arg_list = arg.split()
         if len(arg_list) == 0:
             print("** class name missing **")
-        elif arg_list[0] != "BaseModel":
+        elif arg_list[0] not in classes:
             print("** class doesn't exist **")
         elif (len(arg_list) < 2):
             print("** instance id missing **")
@@ -78,7 +87,7 @@ class HBNBCommand(cmd.Cmd):
             for instance in current_dict.values():
                 output.append(str(instance))
             print(output)
-        elif arg_list[0] != "BaseModel":
+        elif arg_list[0] not in classes:
             print("** class doesn't exist **")
             return
         for instance in current_dict:
@@ -93,7 +102,7 @@ class HBNBCommand(cmd.Cmd):
         current_dict = storage.all()
         if len(arg) == 0:
             print("** class name missing **")
-        elif arg_list[0] != "BaseModel":
+        elif arg_list[0] not in classes:
             print("** class doesn't exist **")
         elif len(arg_list) == 1:
             print("** instance id missing **")
@@ -103,10 +112,10 @@ class HBNBCommand(cmd.Cmd):
             print("** value missing **")
         else:
             update_id = arg_list[1]
-            for instance in current_dict.values:
-                if value.__class__.__name__ == arg_list[0]:
-                    if value.id == update_id:
-                        setattr(value, arg_list[2], arg_list[3])
+            for instance in current_dict.values():
+                if instance.__class__.__name__ == arg_list[0]:
+                    if instance.id == update_id:
+                        setattr(instance, arg_list[2], arg_list[3])
                         storage.save()
                         return
             print("** no instance found **")
