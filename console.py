@@ -54,16 +54,17 @@ class HBNBCommand(cmd.Cmd):
         elif (len(arg_list) < 2):
             print("** instance id missing **")
         else:
-            instance = "{}.{}".format(arg_list[0], arg_list[1])
+            command = "{}.{}".format(arg_list[0], arg_list[1])
             current_dict = storage.all()
-            if instance not in current_dict:
+            if command not in current_dict:
                 print("** no instance found **")
             else:
-                print(current_dict[instance])
+                print(current_dict[command])
 
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id"""
         arg_list = arg.split(" ")
+        current_dict = storage.all()
         if len(arg_list) == 0:
             print("** class name missing **")
         elif arg_list[0] not in classes:
@@ -71,13 +72,13 @@ class HBNBCommand(cmd.Cmd):
         elif (len(arg_list) < 2):
             print("** instance id missing **")
         else:
-            try:
-                instance = BaseModel(id=arg_list[1])
-            # instance = "{}.{}".format(arg_list[0], arg_list[1])
-                instance.remove()
-            except KeyError:
+            instance = "{}.{}".format(arg_list[0], arg_list[1])
+            current_dict = storage.all()
+            if instance in current_dict:
+                del current_dict[instance]
+                storage.save()
+            else:
                 print("** no instance found **")
-
 
     def do_all(self, arg):
         """Prints all string representation of all instances based

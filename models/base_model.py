@@ -45,10 +45,10 @@ class BaseModel:
         return new_dict
 
     def remove(self):
-            """Removes current instance reference from within objects and saves it
-            """
-            key = self.__class__.__name__ + "." + self.id
-            obj = storage.objects
-            obj.pop(key)
-            storage.objects = obj
-            storage.save()
+        """Removes current instance reference from within objects
+        and saves it"""
+        key = self.__class__.__name__ + "." + self.id
+        obj = storage.objects
+        obj.pop(key)
+        storage.objects = obj
+        storage.save()
