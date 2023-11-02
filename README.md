@@ -4,9 +4,6 @@
 </div>
 
 ## About the project
-<div>
-<img src="https://s3.eu-west-3.amazonaws.com/hbtn.intranet/uploads/medias/2018/6/65f4a1dd9c51265f49d0.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MYA5JM5DUTZGMZG%2F20231102%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20231102T011416Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=45516547395deb121414149d7202d0d236ba51c59870c2a78ecdf9383f39f3c3"/>
-</div>
 
 The AirBnB clone project comprises of four parts, the console, the front-end website, the database and an API. This particular project is the console, the first piece of the AirBnB clone. The requirements of the console project are as follows:
 - create your data model
