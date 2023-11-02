@@ -11,10 +11,10 @@ class TestBaseModel(unittest.TestCase):
     def test_save(self):
         """Test - save method"""
         base = BaseModel()
-        old_save = base.updated_at
-        base.save()
         new_save = base.updated_at
-        self.assertNotEqual(old_save, new_save)
+        base.save()
+        selfassertLess(new_save, base.updated_at)
+        self.assertLess(new_save, base.updated_at)
         self.assertTrue(os.path.exists("file.json"))
 
     def test_id(self):
