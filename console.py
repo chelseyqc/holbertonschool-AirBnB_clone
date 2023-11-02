@@ -31,14 +31,16 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         """Creates a new instance of BaseModel & saves to json"""
+        arg_list = arg.split(" ")
         if len(arg) == 0:
             print("** class name missing **")
-        elif arg not in classes:
-            print("** class doesn't exist **")
         else:
-            instance = BaseModel()
-            instance.save()
-            print(instance.id)
+            if arg_list[0] not in classes.keys():
+                print("** class doesn't exist **")
+            else:
+                instance = classes[arg_list[0]]()
+                instance.save()
+                print(instance.id)
 
     def do_show(self, arg):
         """Prints the string representation of an instance
@@ -61,7 +63,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id"""
-        arg_list = arg.split()
+        arg_list = arg.split(" ")
         if len(arg_list) == 0:
             print("** class name missing **")
         elif arg_list[0] not in classes:
@@ -87,13 +89,13 @@ class HBNBCommand(cmd.Cmd):
             for instance in current_dict.values():
                 output.append(str(instance))
             print(output)
-        elif arg_list[0] not in classes:
-            print("** class doesn't exist **")
-            return
-        for instance in current_dict:
-            if arg_list[0] in instance:
-                output.append(str(current_dict[instance]))
-            print(output)
+        else:
+            if arg_list[0] not in classes:
+                print("** class doesn't exist **")
+            for instance in current_dict:
+                if arg_list[0] in instance:
+                    output.append(str(current_dict[instance]))
+        print(output)
 
     def do_update(self, arg):
         """Updates an instance based on the class name and id
