@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/python3
 """BaseModel unit tests"""
 import unittest
 import os
