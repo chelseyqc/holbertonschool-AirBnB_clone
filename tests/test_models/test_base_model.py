@@ -2,6 +2,7 @@
 """BaseModel unit tests"""
 import unittest
 import os
+from datetime import datetime
 from models.base_model import BaseModel
 
 class TestBaseModel(unittest.TestCase):
@@ -10,9 +11,9 @@ class TestBaseModel(unittest.TestCase):
     def test_save(self):
         """Test - save method"""
         base = BaseModel()
-        old_save = str(base.updated_at)
+        old_save = base.updated_at
         base.save()
-        new_save = str(base.updated_at)
+        new_save = base.updated_at
         self.assertNotEqual(old_save, new_save)
 
     def test_id(self):
