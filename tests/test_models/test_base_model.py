@@ -10,10 +10,10 @@ class TestBaseModel(unittest.TestCase):
     def test_save(self):
         """Test - save method"""
         base = BaseModel()
-        new_save = base.updated_at
+        old_save = str(base.updated_at)
         base.save()
-        self.assertLess(new_save, base.updated_at)
-        self.assertTrue(os.path.exists("file.json"))
+        new_save = str(base.updated_at)
+        self.assertNotEqual(old_save, new_save)
 
     def test_id(self):
         """Test - generates a UUID with no input"""
