@@ -43,3 +43,12 @@ class BaseModel:
         new_dict["updated_at"] = self.updated_at.isoformat()
         new_dict["__class__"] = type(self).__name__
         return new_dict
+
+    def remove(self):
+            """Removes current instance reference from within objects and saves it
+            """
+            key = self.__class__.__name__ + "." + self.id
+            obj = storage.objects
+            obj.pop(key)
+            storage.objects = obj
+            storage.save()
