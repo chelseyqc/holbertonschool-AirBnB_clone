@@ -15,6 +15,7 @@ class TestBaseModel(unittest.TestCase):
         base.save()
         new_save = base.updated_at
         self.assertNotEqual(old_save, new_save)
+        self.assertTrue(os.path.exists("file.json"))
 
     def test_id(self):
         """Test - generates a UUID with no input"""
