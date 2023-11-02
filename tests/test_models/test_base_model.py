@@ -8,13 +8,21 @@ from models.base_model import BaseModel
 class TestBaseModel(unittest.TestCase):
     """BaseModel unit tests"""
 
-    def test_save(self):
+    def test_base_save(self):
         """Test - save method"""
         base = BaseModel()
         new_save = base.updated_at
         base.save()
         self.assertLess(new_save, base.updated_at)
         self.assertTrue(os.path.exists("file.json"))
+
+    def test_save(self):
+        """Test - second save method"""
+        base = BaseModel()
+        old_save = str(base.updated_at)
+        base.save()
+        new_save = str(base.updated_at)
+        self.assertNotEqual(old_save, new_save)
 
     def test_id(self):
         """Test - generates a UUID with no input"""
