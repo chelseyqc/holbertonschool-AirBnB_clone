@@ -70,11 +70,15 @@ The command interpreter allows you to manipulate data without a visual interface
 The command interpreter can be used in two modes, interactive mode or non-interactive mode.
 To start the command interpreter in the interactive mode you can run one of the following commands:
 
-`./console.py`
+```
+./console.py
+```
 
 or
 
-`python3 console.py`
+```
+python3 console.py
+```
 
 Once the command interpreter is running the the interactive mode, you can use the following commands:
 
@@ -90,7 +94,9 @@ Once the command interpreter is running the the interactive mode, you can use th
 
 In non-interactive mode, you can provide commands through a pipe or input redirection.
 
-`echo "all" | ./console.py`
+```
+echo "all" | ./console.py
+```
 
 ## Authors
 - [Alicia Tan](https://github.com/aliciastudies)
