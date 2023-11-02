@@ -13,7 +13,6 @@ class TestBaseModel(unittest.TestCase):
         base = BaseModel()
         new_save = base.updated_at
         base.save()
-        selfassertLess(new_save, base.updated_at)
         self.assertLess(new_save, base.updated_at)
         self.assertTrue(os.path.exists("file.json"))
 
