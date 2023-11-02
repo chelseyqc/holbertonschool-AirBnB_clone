@@ -8,6 +8,14 @@ from models.base_model import BaseModel
 class TestBaseModel(unittest.TestCase):
     """BaseModel unit tests"""
 
+    def tearDown(self):
+        """Clean up crew"""
+        try:
+            os.remove("file.json")
+            os.rename("test_file.json", "file.json")
+        except Exception:
+            pass
+
     def test_base_save(self):
         """Test - save method"""
         base = BaseModel()
