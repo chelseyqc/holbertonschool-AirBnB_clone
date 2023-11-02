@@ -51,10 +51,17 @@ To get a local copy up and running on your own machine, follow these simple step
 ### Installation
 
 - If you don't already have Python 3.8.x, install Python
-`sudo apt-get install python3`
+
+```
+sudo apt-get install python3
+```
 
 - Clone this repository
-`git clone https://github.com/chelseyqc/holbertonschool-AirBnB_clone`
+
+```
+git clone https://github.com/chelseyqc/holbertonschool-AirBnB_clone
+```
+
 
 ## Usage
 The command interpreter allows you to manipulate data without a visual interface. For the AirBnB clone, it allows you to create new objects, retrieve objects from files or databases, update object attributes, etc.
