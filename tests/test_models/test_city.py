@@ -16,3 +16,6 @@ class TestCity(unittest.TestCase):
         city = City()
         self.assertTrue(hasattr(city, "name"))
         self.assertEqual(city.name, "")
+
+if __name__ == '__main__':
+    unittest.main()

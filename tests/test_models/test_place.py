@@ -65,3 +65,6 @@ class TestPlace(unittest.TestCase):
         place = Place()
         self.assertTrue(hasattr(place, "amenity_ids"))
         self.assertEqual(place.amenity_ids, [])
+
+if __name__ == '__main__':
+    unittest.main()

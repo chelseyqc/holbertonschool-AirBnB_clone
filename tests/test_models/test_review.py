@@ -22,3 +22,6 @@ class TestReview(unittest.TestCase):
         review = Review()
         self.assertTrue(hasattr(review, "text"))
         self.assertEqual(review.text, "")
+
+if __name__ == '__main__':
+    unittest.main()
