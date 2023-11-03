@@ -35,7 +35,8 @@ class HBNBCommand(cmd.Cmd):
         if len(arg) == 0:
             print("** class name missing **")
         else:
-            if arg_list[0] not in classes.keys():
+            class_name = arg_list[0]
+            if class_name not in classes.keys():
                 print("** class doesn't exist **")
             else:
                 instance = classes[arg_list[0]]()
@@ -54,17 +55,18 @@ class HBNBCommand(cmd.Cmd):
         elif (len(arg_list) < 2):
             print("** instance id missing **")
         else:
-            command = "{}.{}".format(arg_list[0], arg_list[1])
-            current_dict = storage.all()
-            if command not in current_dict:
+            class_name = arg_list[0]
+            instance_id = arg_list[1]
+            instance_key = "{}.{}".format(class_name, instance_id)
+            all_instances = storage.all()
+            if instance_key not in all_instances:
                 print("** no instance found **")
             else:
-                print(current_dict[command])
+                print(all_instances[instance_key])
 
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id"""
         arg_list = arg.split(" ")
-        current_dict = storage.all()
         if arg == "" or arg is None:
             print("** class name missing **")
         elif arg_list[0] not in classes:
@@ -72,10 +74,12 @@ class HBNBCommand(cmd.Cmd):
         elif (len(arg_list) < 2):
             print("** instance id missing **")
         else:
-            instance = "{}.{}".format(arg_list[0], arg_list[1])
-            current_dict = storage.all()
-            if instance in current_dict:
-                del current_dict[instance]
+            class_name = arg_list[0]
+            instance_id = arg_list[1]
+            instance_key = "{}.{}".format(class_name, instance_id)
+            all_instances = storage.all()
+            if instance_key in all_instances:
+                del all_instances[instance_key]
                 storage.save()
             else:
                 print("** no instance found **")
@@ -84,21 +88,21 @@ class HBNBCommand(cmd.Cmd):
         """Prints all string representation of all instances based
         or not on the class name"""
         arg_list = arg.split(" ")
-        current_dict = storage.all()
+        all_instances = storage.all()
         output = []
         if arg == "" or arg is None:
             print("** class name missing **")
         if len(arg) == 0:
-            for instance in current_dict.values():
+            for instance in all_instances.values():
                 output.append(str(instance))
                 print(output)
         else:
             if arg_list[0] not in classes:
                 print("** class doesn't exist **")
             else:
-                for instance in current_dict:
-                    if arg_list[0] in instance:
-                        output.append(str(current_dict[instance]))
+                for instance_key in all_instances:
+                    if arg_list[0] in instance_key:
+                        output.append(str(all_instances[instance]))
                     print(output)
 
     def do_update(self, arg):
@@ -117,11 +121,15 @@ class HBNBCommand(cmd.Cmd):
         elif len(arg_list) == 3:
             print("** value missing **")
         else:
-            update_id = arg_list[1]
-            for instance in current_dict.values():
-                if instance.__class__.__name__ == arg_list[0]:
-                    if instance.id == update_id:
-                        setattr(instance, arg_list[2], arg_list[3])
+            class_name = arg_list[0]
+            instance_id = arg_list[1]
+            attribute_name = arg_list[2]
+            attribute_value = arg_list[3]
+            all_instances = storage.all()
+            for instance in all_instances.values():
+                if instance.__class__.__name__ == class_name:
+                    if instance.id == instance_id:
+                        setattr(instance, attribute_name, attribute_value)
                         storage.save()
                         return
             print("** no instance found **")
